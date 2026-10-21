@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSense | Monitoreo Ambiental IoT</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+<header class="navbar">
+    <a href="#inicio" class="logo">🌿 EcoSense<span>.</span></a>
+    <nav>
+        <a href="#proyecto">Proyecto</a>
+        <a href="#panel">Monitoreo</a>
+        <a href="#pasos">Implementación</a>
+        <a href="#evidencias">Evidencias</a>
+    </nav>
+    <a href="#panel" class="nav-button">Ver panel ↗</a>
+</header>
+
+<main>
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <span class="eyebrow">INTERNET DE LAS COSAS · IoT</span>
+            <h1>El ambiente<br>también <span>habla.</span></h1>
+            <p>
+                Una solución de monitoreo ambiental que permite visualizar
+                la temperatura y humedad, supervisar las condiciones del
+                entorno y generar alertas mediante tecnología IoT.
+            </p>
+            <div class="hero-buttons">
+                <a class="btn-primary" href="#panel">Explorar panel ↓</a>
+                <a class="btn-secondary" href="#pasos">Cómo funciona ↗</a>
+            </div>
+            <p class="notice">ⓘ Presentación educativa con datos simulados.</p>
+        </div>
+
+        <div class="hero-visual">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="plant">🌱</div>
+
+            <div class="float-card temperature-float">
+                <span class="emoji">☀️</span>
+                <div>
+                    <small>Temperatura</small>
+                    <strong id="heroTemp">24.6 °C</strong>
+                </div>
+            </div>
+
+            <div class="float-card humidity-float">
+                <span class="emoji">💧</span>
+                <div>
+                    <small>Humedad</small>
+                    <strong id="heroHumidity">58 %</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <article><span>🌡️</span><div><strong>Temperatura</strong><small>Medición ambiental</small></div></article>
+        <article><span>💧</span><div><strong>Humedad</strong><small>Humedad relativa</small></div></article>
+        <article><span>📡</span><div><strong>Protocolo MQTT</strong><small>Mensajería IoT</small></div></article>
+        <article><span>🔔</span><div><strong>Alertas</strong><small>Control de umbrales</small></div></article>
+    </section>
+
+    <section class="section intro" id="proyecto">
+        <div>
+            <span class="eyebrow">01 / DESCRIPCIÓN</span>
+            <h2>Del sensor a una<br><span>decisión informada.</span></h2>
+        </div>
+        <div>
+            <p>
+                El Internet de las Cosas permite conectar dispositivos físicos
+                para recopilar y transmitir información. En este proyecto,
+                un sensor ambiental obtiene datos de temperatura y humedad,
+                que pueden enviarse mediante un microcontrolador y MQTT
+                a una interfaz de monitoreo.
+            </p>
+            <div class="info-box">
+                <span>💡</span>
+                <div>
+                    <strong>Objetivo del proyecto</strong>
+                    <p>Representar el monitoreo ambiental, detectar valores elevados y registrar eventos importantes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="dashboard" id="panel">
+        <div class="section-header">
+            <div>
+                <span class="eyebrow">02 / CENTRO DE CONTROL</span>
+                <h2>Panel ambiental</h2>
+            </div>
+            <div class="status">
+                <span class="status-dot" id="statusDot"></span>
+                <span id="connectionLabel">Sistema de demostración activo</span>
+                <span class="badge">SIMULACIÓN</span>
+            </div>
+        </div>
+
+        <div class="reading-grid">
+            <article class="reading-card">
+                <div class="card-heading">
+                    <span>Temperatura</span><span class="card-icon orange">☀</span>
+                </div>
+                <div class="reading"><strong id="tempValue">24.6</strong><span>°C</span></div>
+                <p>Temperatura del ambiente</p>
+                <div class="meter"><div id="tempMeter" class="meter-fill"></div></div>
+                <div class="meter-label"><span>0 °C</span><span>50 °C</span></div>
+            </article>
+
+            <article class="reading-card">
+                <div class="card-heading">
+                    <span>Humedad relativa</span><span class="card-icon blue">💧</span>
+                </div>
+                <div class="reading"><strong id="humidityValue">58</strong><span>%</span></div>
+                <p>Humedad del ambiente</p>
+                <div class="meter"><div id="humidityMeter" class="meter-fill blue-fill"></div></div>
+                <div class="meter-label"><span>0 %</span><span>100 %</span></div>
+            </article>
+
+            <article class="reading-card alert-card" id="alertCard">
+                <div class="card-heading">
+                    <span>Estado ambiental</span><span class="card-icon orange">⚑</span>
+                </div>
+                <h3 id="alertTitle">Dentro del umbral</h3>
+                <p id="alertMessage">Las condiciones están dentro del límite configurado.</p>
+                <div class="threshold-info">
+                    <span>Umbral de temperatura</span>
+                    <strong id="thresholdLabel">30 °C</strong>
+                </div>
+                <label for="thresholdInput">Cambiar umbral (10–50 °C)</label>
+                <div class="threshold-controls">
+                    <input id="thresholdInput" type="number" min="10" max="50" value="30">
+                    <button id="applyThreshold">Aplicar</button>
+                </div>
+            </article>
+        </div>
+
+        <div class="lower-grid">
+            <article class="panel-card">
+                <div class="card-heading">
+                    <div>
+                        <h3>Historial de temperatura</h3>
+                        <p>Últimas lecturas simuladas</p>
+                    </div>
+                    <span class="legend"><i></i> Temperatura °C</span>
+                </div>
+
+                <div class="chart">
+                    <div class="chart-guides">
+                        <span></span><span></span><span></span><span></span>
+                    </div>
+                    <svg id="chartSvg" viewBox="0 0 500 180" preserveAspectRatio="none" aria-label="Gráfico de temperatura">
+                        <polyline id="chartLine" points="" />
+                    </svg>
+                </div>
+                <div class="chart-labels"><span>Lecturas anteriores</span><span>Ahora</span></div>
+                <button id="newReading" class="btn-outline">↻ Generar nueva lectura</button>
+            </article>
+
+            <article class="panel-card">
+                <div class="card-heading">
+                    <div>
+                        <h3>Conectividad</h3>
+                        <p>Estado de servicios simulados</p>
+                    </div>
+                    <span class="network-icon">📡</span>
+                </div>
+
+                <div class="service-row">
+                    <span class="service-icon">⌁</span>
+                    <div><strong>Red Wi-Fi</strong><small id="wifiDetail">Conexión simulada</small></div>
+                    <span id="wifiState" class="service-state">Activa</span>
+                </div>
+
+                <div class="service-row">
+                    <span class="service-icon">↗</span>
+                    <div><strong>Cliente MQTT</strong><small>Tema: aula/ambiente</small></div>
+                    <span id="mqttState" class="service-state">Conectado</span>
+                </div>
+
+                <button id="toggleNetwork" class="btn-outline full">
+                    Simular pérdida de red
+                </button>
+                <p class="footnote">La desconexión solo afecta a esta demostración visual.</p>
+            </article>
+        </div>
+
+        <div class="update-bar">
+            <span>Última actualización: <strong id="lastUpdate">--:--:--</strong></span>
+            <span>Dispositivo referencial: <strong>ESP32 + DHT22</strong></span>
+        </div>
+
+        <article class="panel-card events-card">
+            <div class="card-heading">
+                <div>
+                    <span class="eyebrow">REGISTRO DEL SISTEMA</span>
+                    <h3>Historial de eventos</h3>
+                </div>
+                <button id="clearEvents" class="clear-button">Limpiar historial</button>
+            </div>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr><th>Hora</th><th>Evento</th><th>Detalle</th><th>Estado</th></tr>
+                    </thead>
+                    <tbody id="eventsBody"></tbody>
+                </table>
+            </div>
+        </article>
+    </section>
+
+    <section class="section steps-section" id="pasos">
+        <div class="center-heading">
+            <span class="eyebrow">03 / GUÍA DE IMPLEMENTACIÓN</span>
+            <h2>Ocho pasos para ponerlo<br><span>en marcha.</span></h2>
+            <p>Etapas propuestas para construir y comprobar un sistema de monitoreo ambiental IoT.</p>
+        </div>
+
+        <div class="steps-grid">
+            <article class="step-card">
+                <span class="step-no">01</span><div class="step-icon">🔌</div>
+                <h3>Conectar el sensor</h3>
+                <p>Conectar el sensor al microcontrolador siguiendo el esquema del fabricante. Comprobar alimentación, voltaje, GND y pines de datos.</p>
+                <span class="step-tag">Hardware</span>
+            </article>
+            <article class="step-card">
+                <span class="step-no">02</span><div class="step-icon">💻</div>
+                <h3>Preparar el programa</h3>
+                <p>Instalar las bibliotecas necesarias y cargar un programa que lea temperatura y humedad periódicamente. Revisar las lecturas en el monitor serial.</p>
+                <span class="step-tag">Programación</span>
+            </article>
+            <article class="step-card">
+                <span class="step-no">03</span><div class="step-icon">📶</div>
+                <h3>Configurar Wi-Fi y MQTT</h3>
+                <p>Configurar la red y el cliente MQTT. Guardar las credenciales fuera del código que se comparte públicamente.</p>
+                <span class="step-tag">Conectividad</span>
+            </article>
+            <article class="step-card">
+                <span class="step-no">04</span><div class="step-icon">📨</div>
+                <h3>Publicar los datos</h3>
+                <p>Publicar temperatura, humedad y marca temporal en un tema MQTT como <code>aula/ambiente</code>, utilizando un mensaje JSON.</p>
+                <span class="step-tag">Mensajería</span>
+            </article>
+            <article class="step-card">
+                <span class="step-no">05</span><div class="step-icon">📊</div>
+                <h3>Configurar el panel</h3>
+                <p>Configurar un cliente suscriptor para recibir los mensajes y visualizar las mediciones en una interfaz gráfica.</p>
+                <span class="step-tag">Visualización</span>
+            </article>
+            <article class="step-card">
+                <span class="step-no">06</span><div class="step-icon">🔔</div>
+                <h3>Definir las alertas</h3>
+                <p>Establecer un umbral de demostración, activar una alerta visual cuando se supere y registrar la hora del evento.</p>
+                <span class="step-tag">Alertas</span>
+            </article>
+            <article class="step-card">
+                <span class="step-no">07</span><div class="step-icon">🌐</div>
+                <h3>Probar la desconexión</h3>
+                <p>Desconectar temporalmente la red, observar la interrupción de mensajes y luego restaurar la conexión para comprobar su recuperación.</p>
+                <span class="step-tag">Pruebas</span>
+            </article>
+            <article class="step-card">
+                <span class="step-no">08</span><div class="step-icon">📷</div>
+                <h3>Documentar evidencias</h3>
+                <p>Tomar capturas propias de la lectura del sensor, la recepción del mensaje MQTT y el panel funcionando. Añadir fecha y descripción.</p>
+                <span class="step-tag">Documentación</span>
+            </article>
+        </div>
+    </section>
+
+    <section class="data-section">
+        <div>
+            <span class="eyebrow">04 / EJEMPLO MQTT</span>
+            <h2>Datos pequeños.<br><span>Información útil.</span></h2>
+            <p>Este es un ejemplo del mensaje que un dispositivo podría publicar. Los valores cambian al generar nuevas lecturas en esta demostración.</p>
+            <div class="topic-box">
+                <span>TOPIC</span>
+                <code>aula/ambiente</code>
+                <button id="copyTopic">Copiar</button>
+            </div>
+        </div>
+
+        <pre class="json-panel"><span class="json-title">PAYLOAD · JSON</span><code>{
+  "dispositivo": "esp32-aula",
+  "temperatura": <span id="jsonTemp">24.6</span>,
+  "humedad": <span id="jsonHumidity">58</span>,
+  "timestamp": "<span id="jsonTime">--</span>"
+}</code><span class="json-footer">● Ejemplo de estructura de mensaje</span></pre>
+    </section>
+
+    <section class="section evidence-section" id="evidencias">
+        <div class="center-heading">
+            <span class="eyebrow">05 / DOCUMENTACIÓN</span>
+            <h2>Las evidencias del <span>proyecto.</span></h2>
+            <p>Durante una práctica real, reemplaza estos espacios con tus propias capturas.</p>
+        </div>
+
+        <div class="evidence-grid">
+            <article class="evidence-card">
+                <div class="evidence-placeholder"><span>01</span><strong>▧</strong><p>Insertar captura</p></div>
+                <h3>Lectura del sensor</h3>
+                <p>Captura del monitor serial mostrando la temperatura y humedad reales.</p>
+            </article>
+            <article class="evidence-card">
+                <div class="evidence-placeholder"><span>02</span><strong>⌁</strong><p>Insertar captura</p></div>
+                <h3>Mensaje MQTT recibido</h3>
+                <p>Captura del cliente MQTT mostrando el tema y el contenido del mensaje.</p>
+            </article>
+            <article class="evidence-card">
+                <div class="evidence-placeholder"><span>03</span><strong>▤</strong><p>Insertar captura</p></div>
+                <h3>Panel en funcionamiento</h3>
+                <p>Captura del panel con las mediciones y el estado del sistema.</p>
+            </article>
+        </div>
+
+        <div class="info-box evidence-note">
+            <span>ⓘ</span>
+            <p><strong>Nota:</strong> los datos y las conexiones de esta página son simulados. No deben presentarse como mediciones reales de un sensor físico.</p>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <a href="#inicio" class="logo">🌿 EcoSense<span>.</span></a>
+    <p>Proyecto educativo de Internet de las Cosas · Monitoreo ambiental</p>
+    <a href="#inicio">Volver arriba ↑</a>
+</footer>
+
+</body>
+</html>
